@@ -6,8 +6,12 @@ function Alart(props) {
         return lower.charAt(0).toUpperCase()+lower.slice(1);
     }
   return (
-    props.alart && <div className={`alert alert-${props.alart.type}`} role="alert">
+    <div style={{height: '50px'}}>
+      {
+        props.alart && <div className={`alert alert-${props.alart.type}`} role="alert">
         <strong>{Capitalize(props.alart.type)}</strong> : {props.alart.msg}
+    </div>
+      }
     </div>
   )
 };

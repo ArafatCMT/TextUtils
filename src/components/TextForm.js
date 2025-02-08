@@ -20,17 +20,7 @@ export default function TextForm(props){
 
     const handleCopyClick = () => {
         navigator.clipboard.writeText(text)
-        .then(() => {
-            console.log("Text copied to clipboard!");
-            document.getElementById('msg').style.display = 'block'
-
-            setTimeout(() => {
-                document.getElementById('msg').style.display = 'none'
-            }, 1500);
-        })
-        .catch((err) => {
-            console.error("Failed to copy text: ", err);
-        });
+       props.ShowAlart("Text copied to clipboard!", "success")
     }
 
     const handleTitleClick = () =>{
@@ -87,30 +77,30 @@ export default function TextForm(props){
         <>
         <div style={{color: props.mode ==='dark'?'white':'#424D61'}}>
             <h1 className="mt-2 summary">{props.heading}</h1>
-            <p className="msg" id="msg">Text copied to clipboard!</p>
+            
             <div className="mb-3 mt-2">
                 <textarea className={`form-control ${props.mode === 'dark' ? 'dark-mode' : ''}`} value={text} onChange={handleOnChange} id="exampleFormControlTextarea1" placeholder="type here..." rows="8" style={{backgroundColor: props.mode === 'dark'?'#303030': 'white', color: props.mode==='dark'?'white':'#212529', }}></textarea>
             </div>
-            <button className="btn btn-primary mx-1" onClick={handleUpClick}>Convert to UpperCase</button>
-            <button className="btn btn-success mx-1" onClick={handleLoClick}>Convert to LowerCase</button>
-            <button className="btn btn-warning mx-1" onClick={handleTitleClick}>Convert to TitleCase</button>
-            <button className="btn btn-info mx-1" onClick={handleExtraSpace}>Remove ExtraSpace</button>
-            <button className="btn btn-dark mx-1" onClick={handleCopyClick}>Copy to ClipBoard</button>
-            <button className="btn btn-danger mx-1" onClick={handleClear}>Clear Text</button>
+            <button disabled={text.length === 0} className="btn btn-success mx-1" onClick={handleLoClick}>Convert to LowerCase</button>
+            <button disabled={text.length === 0} className="btn btn-primary mx-1" onClick={handleUpClick}>Convert to UpperCase</button>
+            <button disabled={text.length === 0} className="btn btn-warning mx-1" onClick={handleTitleClick}>Convert to TitleCase</button>
+            <button disabled={text.length === 0} className="btn btn-info mx-1" onClick={handleExtraSpace}>Remove ExtraSpace</button>
+            <button disabled={text.length === 0} className="btn btn-dark mx-1" onClick={handleCopyClick}>Copy to ClipBoard</button>
+            <button disabled={text.length === 0} className="btn btn-danger mx-1" onClick={handleClear}>Clear Text</button>
 
 
             <div className="mt-4">
                 <h2 className="summary">Your Text Summary</h2>
-                <p><b>{text.split(" ").length}</b> Words and <b>{text.length}</b> Characters.</p>
+                <p><b>{text.split(/\s+/).filter((element)=>{return element.length !== 0}).length}</b> Words and <b>{text.length}</b> Characters.</p>
             </div>
 
             <div className=" mt-3">
                 <h2 className="summary">Preview</h2>
-                <p>{text.length? text: 'Enter something in the textbox above to preview here...'}</p>
+                <p>{text.length? text: 'Nothing to Preview...'}</p>
             </div>
         </div>
         </>
 
         
     )
-};
+}

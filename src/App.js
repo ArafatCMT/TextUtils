@@ -4,7 +4,6 @@ import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
 import Alart from './components/Alart';
 import { BrowserRouter as Router, Routes, Route } from "react-router";
-
 import About from './components/About';
 
 function App() {
@@ -16,7 +15,17 @@ function App() {
   if(mode === 'dark'){
     document.body.style.backgroundColor = '#182C25';
   }
-  const toggleMode = () => {
+
+  const removeClassName = () =>{
+    document.body.classList.remove('bg-light')
+    document.body.classList.remove('bg-dark')
+    document.body.classList.remove('bg-success')
+    document.body.classList.remove('bg-danger')
+    document.body.classList.remove('bg-warning')
+  }
+  const toggleMode = (cls) => {
+    removeClassName()
+    document.body.classList.add('bg-'+cls)
     if(mode === 'light')
     {
       setMode('dark')
@@ -25,7 +34,7 @@ function App() {
       document.body.style.backgroundColor = '#182C25';
       // console.log("light -> dark")
       ShowAlart("Drak mode has been enabled", "success");
-      document.title = 'TextUtils - Dark Mode'
+      // document.title = 'TextUtils - Dark Mode'
 
       // setInterval(() => {
       //   document.title = 'TextUtils is Amazing'
@@ -42,7 +51,7 @@ function App() {
       setTextColor('text-dark')
       document.body.style.backgroundColor = 'white';
       ShowAlart("Light mode has been enabled", "success");
-      document.title = 'TextUtils - Light Mode'
+      // document.title = 'TextUtils - Light Mode'
       // console.log("dark -> light")
     }
   }
@@ -62,8 +71,9 @@ function App() {
       <Navbar title="TextUtils" aboutText="About Us" toggleMode={toggleMode} mode={mode} modeText={modeText} textColor={textColor}/>
       <div className="container">
       <Alart alart={alart}/>
+      {/* <TextForm heading="Try - TextUtils Word Counter, Character Counter, Remove Extra Spaces" mode={mode} ShowAlart={ShowAlart}/> */}
       <Routes>
-      <Route path="/" element={<TextForm heading="Enter the text to analyze below" mode={mode} ShowAlart={ShowAlart}/>} />
+      <Route path="/" element={<TextForm heading="Try - TextUtils Word Counter, Character Counter, Remove Extra Spaces" mode={mode} ShowAlart={ShowAlart}/>} />
       <Route path="/about" element={<About />} />       
       </Routes>
       </div>
